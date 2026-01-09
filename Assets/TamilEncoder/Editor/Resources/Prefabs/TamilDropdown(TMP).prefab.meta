@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 0fccdf89a1d9c4a4ea6ea6ddd1b35db1
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 230819
+  packageName: tamil font fixer and tamil font encoder - Unicode to TSCII
+  packageVersion: 0.3
+  assetPath: Assets/TamilEncoder/Editor/Resources/Prefabs/TamilDropdown(TMP).prefab
+  uploadId: 589463

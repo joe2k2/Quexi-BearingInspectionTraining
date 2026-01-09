@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 0cf07f991ecdfc641a12693e2f6db620
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 230819
+  packageName: tamil font fixer and tamil font encoder - Unicode to TSCII
+  packageVersion: 0.3
+  assetPath: Assets/TamilEncoder/Example/Tamil_Text_Example.unity
+  uploadId: 589463

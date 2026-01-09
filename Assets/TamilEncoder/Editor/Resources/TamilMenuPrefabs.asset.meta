@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 2b7e4b1be17ba7342a23c429fb698517
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 230819
+  packageName: tamil font fixer and tamil font encoder - Unicode to TSCII
+  packageVersion: 0.3
+  assetPath: Assets/TamilEncoder/Editor/Resources/TamilMenuPrefabs.asset
+  uploadId: 589463

@@ -20,16 +20,7 @@ public class GrabbableEnginePart : MonoBehaviour
         snapInteractable = GetComponent<SnapInteractable>();
     }
 
-    void Start()
-    {
-        if (partData != null && partData.explanationAudio != null)
-        {
-            if (PartAudioManager.Instance != null)
-            {
-                PartAudioManager.Instance.RegisterPartAudio(partData, partData.explanationAudio);
-            }
-        }
-    }
+    // Start method removed as audio registration is no longer needed.
 
     void OnEnable()
     {

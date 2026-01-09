@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 805fd77cabf9e0840ae1de5a9fe95d70
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 230819
+  packageName: tamil font fixer and tamil font encoder - Unicode to TSCII
+  packageVersion: 0.3
+  assetPath: Assets/TamilEncoder/Script/TamilInputField.cs
+  uploadId: 589463

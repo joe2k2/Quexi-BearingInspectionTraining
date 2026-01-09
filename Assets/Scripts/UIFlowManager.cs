@@ -53,7 +53,14 @@ public class UIFlowManager : MonoBehaviour
             PlayWelcomeAudio();
         }
     }
-
+    private void OnEnable()
+    {
+        EventManager.UpdateMenuUIActiveState += UpdateMenuActiveState;
+    }
+    private void OnDisable()
+    {
+        EventManager.UpdateMenuUIActiveState -= UpdateMenuActiveState;
+    }
     void OnDestroy()
     {
         RemoveButtonListeners();
@@ -225,5 +232,10 @@ public class UIFlowManager : MonoBehaviour
     public AudioClip GetWelcomeAudioClip()
     {
         return welcomeAudioClip;
+    }
+
+    public void UpdateMenuActiveState(bool active)
+    {
+        explodedViewUI.SetActive(active);
     }
 }

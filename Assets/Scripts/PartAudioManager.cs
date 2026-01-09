@@ -13,7 +13,6 @@ public class PartAudioManager : MonoBehaviour
     [SerializeField] private bool showDebugLogs = true;
 
     private EnginePartData currentPlayingPart;
-    private Dictionary<string, AudioClip> partAudioClips = new Dictionary<string, AudioClip>();
     private bool isPlaying = false;
 
     void Awake()
@@ -47,24 +46,6 @@ public class PartAudioManager : MonoBehaviour
         }
     }
 
-    public void RegisterPartAudio(EnginePartData partData, AudioClip audioClip)
-    {
-        if (partData == null || audioClip == null || string.IsNullOrEmpty(partData.partName))
-        {
-            if (showDebugLogs)
-                Debug.LogWarning("PartAudioManager: Cannot register - missing data or clip");
-            return;
-        }
-
-        if (!partAudioClips.ContainsKey(partData.partName))
-        {
-            partAudioClips[partData.partName] = audioClip;
-
-            if (showDebugLogs)
-                Debug.Log($"PartAudioManager: Registered audio for '{partData.partName}' - Clip: {audioClip.name}");
-        }
-    }
-
     public void OnPartGrabbed(EnginePartData partData)
     {
         if (partData == null || audioSource == null)
@@ -91,7 +72,9 @@ public class PartAudioManager : MonoBehaviour
             }
         }
 
-        if (partAudioClips.TryGetValue(partData.partName, out AudioClip clip))
+        AudioClip clip = partData.GetAudio(LanguageManager.Instance.CurrentLanguage);
+
+        if (clip != null)
         {
             if (currentPlayingPart != null && showDebugLogs)
             {
@@ -106,12 +89,12 @@ public class PartAudioManager : MonoBehaviour
             isPlaying = true;
 
             if (showDebugLogs)
-                Debug.Log($"PartAudioManager: Playing audio for '{partData.partName}' - Duration: {clip.length:F1}s");
+                Debug.Log($"PartAudioManager: Playing audio for '{partData.partName}' ({LanguageManager.Instance.CurrentLanguage}) - Duration: {clip.length:F1}s");
         }
         else
         {
             if (showDebugLogs)
-                Debug.LogWarning($"PartAudioManager: No audio clip registered for '{partData.partName}'. Registered parts: {string.Join(", ", partAudioClips.Keys)}");
+                Debug.LogWarning($"PartAudioManager: No audio clip found for '{partData.partName}' in {LanguageManager.Instance.CurrentLanguage}");
         }
     }
 

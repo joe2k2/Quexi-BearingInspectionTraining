@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: da6f40bea57120f459953f44f8278839
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 230819
+  packageName: tamil font fixer and tamil font encoder - Unicode to TSCII
+  packageVersion: 0.3
+  assetPath: Assets/TamilEncoder/Font/Sai-Sai_TextMeshPro.asset
+  uploadId: 589463

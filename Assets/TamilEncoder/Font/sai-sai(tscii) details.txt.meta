@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: c7e20759e48946649ab26372484c0191
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 230819
+  packageName: tamil font fixer and tamil font encoder - Unicode to TSCII
+  packageVersion: 0.3
+  assetPath: Assets/TamilEncoder/Font/sai-sai(tscii) details.txt
+  uploadId: 589463

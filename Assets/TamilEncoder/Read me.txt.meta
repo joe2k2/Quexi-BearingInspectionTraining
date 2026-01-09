@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: d72851e69e387d3439d55ab9673a39c5
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 230819
+  packageName: tamil font fixer and tamil font encoder - Unicode to TSCII
+  packageVersion: 0.3
+  assetPath: Assets/TamilEncoder/Read me.txt
+  uploadId: 589463

@@ -35,6 +35,14 @@ public class EngineAnimationController : MonoBehaviour
     [Header("Info UI")]
     [SerializeField] private PartInfoUIManager partInfoUIManager;
 
+    [Header("Bearing Grabbable")]
+    public Grabbable bearingGrabbable;
+    public GameObject bearingGrabbableGO;
+
+    [Header("Bearing SnapInteractor")]
+    public SnapInteractor bearingSnapInteractor;
+    public GameObject bearingSnapZone;
+
     private Animator animator;
     private bool isExploded = false;
     private bool isAnimating = false;
@@ -64,8 +72,25 @@ public class EngineAnimationController : MonoBehaviour
         {
             partInfoUIManager.ShowBearingOverview();
         }
+        bearingSnapInteractor.WhenStateChanged += OnBearingSnapStateChanged;
     }
+    private void OnBearingSnapStateChanged(InteractorStateChangeArgs args)
+    {
+        bool isSnapped = CheckBearingSnapState();
 
+        EventManager.UpdateMenuUIActiveState?.Invoke(isSnapped);
+    }
+    bool CheckBearingSnapState()
+    {
+        if (bearingSnapInteractor != null && bearingSnapInteractor.enabled)
+        {
+            if (bearingSnapInteractor.State != InteractorState.Select)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
     void OnDestroy()
     {
         UnsubscribeFromSnapEvents();
@@ -73,7 +98,7 @@ public class EngineAnimationController : MonoBehaviour
 
     void Update()
     {
-        if (isAnimating && animator != null)
+        if (isAnimating)
         {
             AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
@@ -91,10 +116,7 @@ public class EngineAnimationController : MonoBehaviour
                     SetAnnotationsActive(true);
                     SubscribeToSnapEvents();
 
-                    if (partInfoUIManager != null)
-                    {
-                        partInfoUIManager.HideBearingOverview();
-                    }
+                    partInfoUIManager.HideBearingOverview();
 
                     onExplodeComplete?.Invoke();
 
@@ -111,10 +133,7 @@ public class EngineAnimationController : MonoBehaviour
 
                     animator.enabled = false;
 
-                    if (partInfoUIManager != null)
-                    {
-                        partInfoUIManager.ShowBearingOverview();
-                    }
+                    partInfoUIManager.ShowBearingOverview();
 
                     onReassembleComplete?.Invoke();
                     onAllPartsSnappedChanged?.Invoke(false);
@@ -270,6 +289,8 @@ public class EngineAnimationController : MonoBehaviour
                 grabbableGO.SetActive(enabled);
             }
         }
+        bearingGrabbable.enabled = !enabled;
+        bearingGrabbableGO.SetActive(!enabled);
     }
 
     private void SetSnapZonesActive(bool active)
@@ -289,6 +310,9 @@ public class EngineAnimationController : MonoBehaviour
                 snapZone.SetActive(active);
             }
         }
+
+        bearingSnapInteractor.enabled = !active;
+        bearingSnapZone.SetActive(!active);
     }
 
     private void SetAnnotationsActive(bool active)

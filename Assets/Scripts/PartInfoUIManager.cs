@@ -40,6 +40,10 @@ public class PartInfoUIManager : MonoBehaviour
     void Start()
     {
         SubscribeToAllParts();
+        if (LanguageManager.Instance != null)
+        {
+            LanguageManager.Instance.OnLanguageChanged += OnLanguageChanged;
+        }
     }
 
     void OnDestroy()
@@ -50,6 +54,19 @@ public class PartInfoUIManager : MonoBehaviour
         }
 
         UnsubscribeFromAllParts();
+        
+        if (LanguageManager.Instance != null)
+        {
+            LanguageManager.Instance.OnLanguageChanged -= OnLanguageChanged;
+        }
+    }
+
+    private void OnLanguageChanged(Language newLanguage)
+    {
+        if (currentDisplayedPart != null && infoPanel != null && infoPanel.activeSelf)
+        {
+            ShowPartInfo(currentDisplayedPart);
+        }
     }
 
     private void SubscribeToAllParts()
@@ -122,9 +139,8 @@ public class PartInfoUIManager : MonoBehaviour
         isShowingBearingOverview = true;
         ShowPartInfo(bearingOverviewData);
 
-        if (PartAudioManager.Instance != null && bearingOverviewData.explanationAudio != null)
+        if (PartAudioManager.Instance != null)
         {
-            PartAudioManager.Instance.RegisterPartAudio(bearingOverviewData, bearingOverviewData.explanationAudio);
             PartAudioManager.Instance.OnPartGrabbed(bearingOverviewData);
         }
 
@@ -160,14 +176,19 @@ public class PartInfoUIManager : MonoBehaviour
 
         currentDisplayedPart = partData;
 
+        // Get localized content based on current language
+        Language currentLang = LanguageManager.Instance.CurrentLanguage;
+        string name = partData.GetName(currentLang);
+        string desc = partData.GetDescription(currentLang);
+
         if (partNameText != null)
         {
-            partNameText.text = partData.partName;
+            partNameText.text = name;
         }
 
         if (partDescriptionText != null)
         {
-            partDescriptionText.text = partData.description;
+            partDescriptionText.text = desc;
         }
 
         /*if (partImage != null && partData.partImage != null)
