@@ -26224,7 +26224,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 440948656542363876, guid: b8573c816e5b6b54ebf34e1253271cb1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.539
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 440948656542363876, guid: b8573c816e5b6b54ebf34e1253271cb1, type: 3}
       propertyPath: m_LocalRotation.w
@@ -33992,7 +33992,7 @@ GameObject:
   - component: {fileID: 5547365655791922614}
   - component: {fileID: 4603817577585687326}
   m_Layer: 0
-  m_Name: Hub_Audio  (5)
+  m_Name: Hub1_Audio  (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34683,7 +34683,7 @@ GameObject:
   - component: {fileID: 8817560444782571776}
   - component: {fileID: 3571918248213170698}
   m_Layer: 0
-  m_Name: Hub_Description (2)
+  m_Name: Hub1_Description (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35089,7 +35089,7 @@ GameObject:
   - component: {fileID: 4365716722471996392}
   - component: {fileID: 9206145092628570022}
   m_Layer: 0
-  m_Name: Hub_Description
+  m_Name: Hub1_Description
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35300,7 +35300,7 @@ GameObject:
   - component: {fileID: 1460071051679328609}
   - component: {fileID: 8253297737196639379}
   m_Layer: 0
-  m_Name: 'Hub_Audio '
+  m_Name: 'Hub1_Audio '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35415,7 +35415,7 @@ GameObject:
   - component: {fileID: 7335745399833631357}
   - component: {fileID: 1018159629485675598}
   m_Layer: 0
-  m_Name: Hub_Description (5)
+  m_Name: Hub1_Description (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35544,7 +35544,7 @@ GameObject:
   - component: {fileID: 5812235621545404732}
   - component: {fileID: 3645120128215625362}
   m_Layer: 0
-  m_Name: Hub_Audio  (4)
+  m_Name: Hub1_Audio  (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35662,7 +35662,7 @@ GameObject:
   - component: {fileID: 4034900033633651248}
   - component: {fileID: 8101779886268602980}
   m_Layer: 0
-  m_Name: Hub_Audio  (6)
+  m_Name: Hub1_Audio  (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35709,7 +35709,7 @@ GameObject:
   - component: {fileID: 8668452292158924935}
   - component: {fileID: 3213133020243670589}
   m_Layer: 0
-  m_Name: Hub_Description (1)
+  m_Name: Hub1_Description (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35882,7 +35882,7 @@ GameObject:
   - component: {fileID: 9044029718459968684}
   - component: {fileID: 4735062419650599556}
   m_Layer: 0
-  m_Name: Hub_Description (4)
+  m_Name: Hub1_Description (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35916,7 +35916,7 @@ GameObject:
   - component: {fileID: 1363522596328151289}
   - component: {fileID: 3147560124439291648}
   m_Layer: 0
-  m_Name: Hub_Audio  (7)
+  m_Name: Hub1_Audio  (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35967,7 +35967,7 @@ GameObject:
   - component: {fileID: 3106776745556470301}
   - component: {fileID: 8967098094448076401}
   m_Layer: 0
-  m_Name: Hub_Description (6)
+  m_Name: Hub1_Description (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36083,7 +36083,7 @@ GameObject:
   - component: {fileID: 378151326624156849}
   - component: {fileID: 5558668287044345013}
   m_Layer: 0
-  m_Name: Hub_Audio  (1)
+  m_Name: Hub1_Audio  (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36187,7 +36187,7 @@ GameObject:
   - component: {fileID: 5334240922659911923}
   - component: {fileID: 1743182097307524613}
   m_Layer: 0
-  m_Name: Hub_Audio  (2)
+  m_Name: Hub1_Audio  (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36598,7 +36598,7 @@ GameObject:
   - component: {fileID: 6417320596965293954}
   - component: {fileID: 4720158205610655207}
   m_Layer: 0
-  m_Name: Hub_Description (7)
+  m_Name: Hub1_Description (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36647,7 +36647,7 @@ GameObject:
   - component: {fileID: 5195195245152184021}
   - component: {fileID: 7938497768008367011}
   m_Layer: 0
-  m_Name: Hub_Audio  (3)
+  m_Name: Hub1_Audio  (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36694,7 +36694,7 @@ GameObject:
   - component: {fileID: 6484751289928563318}
   - component: {fileID: 5453929205100470867}
   m_Layer: 0
-  m_Name: Hub_Description (3)
+  m_Name: Hub1_Description (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -137,6 +137,7 @@ public class ExplodedViewUIController : MonoBehaviour
         {
             if (isOn)
             {
+                EventManager.UpdateButtonsInteractable?.Invoke(false);
                 animationController.ToggleExplodedView(true);
                 UpdateButtonLabel(true);
             }
@@ -152,6 +153,7 @@ public class ExplodedViewUIController : MonoBehaviour
                     explodedViewToggle.isOn = true;
                     Debug.LogWarning("Cannot reassemble - all parts must be snapped first!");
                 }
+                EventManager.UpdateButtonsInteractable?.Invoke(true);
             }
         }
         else if (animationController != null && animationController.IsAnimating())

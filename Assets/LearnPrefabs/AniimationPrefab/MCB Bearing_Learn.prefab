@@ -3830,8 +3830,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 65.835, y: -23}
-  m_SizeDelta: {x: 103.67, y: 18}
+  m_AnchoredPosition: {x: 61.06, y: -23}
+  m_SizeDelta: {x: 94.12, y: 18}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3025388432611977981
 CanvasRenderer:
@@ -3861,7 +3861,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Plastic Gauge
+  m_text: Plastic Cage
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fbb7c6a04be6d8341934b839f24b42e1, type: 2}
   m_sharedMaterial: {fileID: 4687939059374929122, guid: fbb7c6a04be6d8341934b839f24b42e1, type: 2}
@@ -4542,8 +4542,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 65.835, y: -23}
-  m_SizeDelta: {x: 103.67, y: 18}
+  m_AnchoredPosition: {x: 61.06, y: -23}
+  m_SizeDelta: {x: 94.12, y: 18}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4164857072162976787
 CanvasRenderer:
@@ -4573,7 +4573,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Plastic Gauge
+  m_text: Plastic Cage
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fbb7c6a04be6d8341934b839f24b42e1, type: 2}
   m_sharedMaterial: {fileID: 4687939059374929122, guid: fbb7c6a04be6d8341934b839f24b42e1, type: 2}

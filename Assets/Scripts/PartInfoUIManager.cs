@@ -1,4 +1,4 @@
-using Lean.Localization;
+﻿using Lean.Localization;
 using System;
 using System.Collections.Generic;
 using TamilUI;
@@ -194,13 +194,20 @@ public class PartInfoUIManager : MonoBehaviour
     void OnEnable()
     {
         EventManager.UpdateSelectedBearing += OnBearingChanged;
+        EventManager.UpdateButtonsInteractable += OnExplodedViewToggleChanged;
     }
 
     void OnDisable()
     {
         EventManager.UpdateSelectedBearing -= OnBearingChanged;
+        EventManager.UpdateButtonsInteractable -= OnExplodedViewToggleChanged;
     }
-
+    void OnExplodedViewToggleChanged(bool value)
+    {
+        startQuizButton.interactable = value;
+        startLearnButton.interactable = value;
+        changeBearingButton.interactable = value;
+    }
     void OnDestroy()
     {
         if (Instance == this) Instance = null;
@@ -441,8 +448,9 @@ public class PartInfoUIManager : MonoBehaviour
         // Swap Models Back
         if (CurrentAnimationBearing != null)
         {
+            CurrentAnimationBearing.transform.localRotation = Quaternion.identity; // Reset Rotation
             CurrentAnimationBearing.SetActive(false);
-            //currentAnimationController.transform.rotation = Quaternion.identity;
+            // currentAnimationController.transform.rotation = Quaternion.identity;
         }
         if (CurrentSelectedBearing != null) CurrentSelectedBearing.SetActive(true);
         
@@ -612,6 +620,14 @@ public class PartInfoUIManager : MonoBehaviour
     {
         if (CurrentSelectedIndex < 0 || CurrentSelectedIndex >= bearingOptions.Count) return;
 
+
+        // Hide all models
+        foreach (var option in bearingOptions)
+        {
+            if (option.bearingModel != null) option.bearingModel.SetActive(false);
+            if (option.animationBearingModel != null) option.animationBearingModel.SetActive(false);
+        }
+
         currentQuizData = bearingOptions[CurrentSelectedIndex].quizData;
 
         if (currentQuizData == null || currentQuizData.questions == null || currentQuizData.questions.Count == 0)
@@ -677,13 +693,17 @@ public class PartInfoUIManager : MonoBehaviour
                 if (q.optionPhrases != null && i < q.optionPhrases.Length)
                 {
                     quizOptionButtons[i].gameObject.SetActive(true);
-                    quizOptionButtons[i].interactable = true; 
-                    
+                    quizOptionButtons[i].interactable = true;
+
                     if (quizOptionTexts != null && i < quizOptionTexts.Length)
                     {
-                        var optLocalizer = quizOptionTexts[i].GetComponent<LeanLocalizedTamilTextMeshProUGUI>();
+                        var optLocalizer = quizOptionTexts[i]
+                            .GetComponent<LeanLocalizedTamilTextMeshProUGUI>();
+
                         string phrase = q.optionPhrases[i];
-                        string fallback = (q.fallbackOptions != null && i < q.fallbackOptions.Length) ? q.fallbackOptions[i] : "";
+                        string fallback = (q.fallbackOptions != null && i < q.fallbackOptions.Length)
+                            ? q.fallbackOptions[i]
+                            : "";
 
                         if (optLocalizer != null)
                         {
@@ -693,8 +713,16 @@ public class PartInfoUIManager : MonoBehaviour
                         }
                         else
                         {
-                             quizOptionTexts[i].text = GetLocalizedText(phrase, fallback);
+                            quizOptionTexts[i].text = GetLocalizedText(phrase, fallback);
                         }
+
+                        // 🔥 IMPORTANT PART
+                        quizOptionTexts[i].ForceMeshUpdate();
+
+                        RectTransform buttonRect =
+                            quizOptionTexts[i].GetComponentInParent<RectTransform>();
+
+                        LayoutRebuilder.ForceRebuildLayoutImmediate(buttonRect);
                     }
                 }
                 else
@@ -739,6 +767,7 @@ public class PartInfoUIManager : MonoBehaviour
     private void CloseQuiz()
     {
         isQuizActive = false;
+        CurrentSelectedBearing.SetActive(true);
         if (quizPanel != null) quizPanel.SetActive(false);
         if (quizResultPanel != null) quizResultPanel.SetActive(false);
         
@@ -820,7 +849,11 @@ public class PartInfoUIManager : MonoBehaviour
 
         // 3. Reset Models
         if (CurrentSelectedBearing != null) CurrentSelectedBearing.SetActive(false); // Hide model during selection
-        if (CurrentAnimationBearing != null) CurrentAnimationBearing.SetActive(false); 
+        if (CurrentAnimationBearing != null) 
+        {
+            CurrentAnimationBearing.transform.localRotation = Quaternion.identity; // Reset Rotation
+            CurrentAnimationBearing.SetActive(false); 
+        } 
 
         // 4. Reset States
         isLearnActive = false;

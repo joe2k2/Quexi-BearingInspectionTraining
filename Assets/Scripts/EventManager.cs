@@ -6,4 +6,5 @@ public class EventManager
 {
     public static Action<bool> UpdateMenuUIActiveState;
     public static Action<GameObject> UpdateSelectedBearing;
+    public static Action<bool> UpdateButtonsInteractable;
 }
