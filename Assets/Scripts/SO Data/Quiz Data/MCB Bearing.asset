@@ -27,6 +27,9 @@ MonoBehaviour:
     - To reduce size
     - To eliminate lubrication
     correctOptionIndex: 1
+    isInteractionBased: 0
+    snapZonePrefab: {fileID: 0}
+    interactablePrefabs: []
   - questionPhrase: MCBBearing_Quiz_Question_2
     audioPhrase: 
     optionPhrases:
@@ -41,6 +44,9 @@ MonoBehaviour:
     - Plastic cage
     - Rubber cage
     correctOptionIndex: 2
+    isInteractionBased: 0
+    snapZonePrefab: {fileID: 0}
+    interactablePrefabs: []
   - questionPhrase: MCBBearing_Quiz_Question_3
     audioPhrase: 
     optionPhrases:
@@ -55,3 +61,56 @@ MonoBehaviour:
     - Bolt tightness
     - Shaft alignment
     correctOptionIndex: 1
+    isInteractionBased: 0
+    snapZonePrefab: {fileID: 0}
+    interactablePrefabs: []
+  - questionPhrase: MCBBearing_Quiz_Question_4
+    audioPhrase: 
+    optionPhrases:
+    - MCBBearing_Quiz_Q3_Opt_1
+    - MCBBearing_Quiz_Q3_Opt_2
+    - MCBBearing_Quiz_Q3_Opt_3
+    - MCBBearing_Quiz_Q3_Opt_4
+    fallbackQuestion: 'What should you do next?
+
+
+      Grab the correct part and
+      place it at the center.'
+    fallbackOptions:
+    - Rust formation
+    - Heat discoloration or cracking
+    - Bolt tightness
+    - Shaft alignment
+    correctOptionIndex: 2
+    isInteractionBased: 1
+    snapZonePrefab: {fileID: 3776236411537440366, guid: b9d4ae88afe5e694f9f101f5eceadf92, type: 3}
+    interactablePrefabs:
+    - {fileID: 2647043035730869944, guid: 0ae02246fc467d9428c3c243ade7e84d, type: 3}
+    - {fileID: 6841928153581891826, guid: c3219e113b6816a4b84cfc03d231504a, type: 3}
+    - {fileID: 7834854461209916403, guid: 164a17520ba108e43a5a36b67636af67, type: 3}
+    - {fileID: 5150020932783108157, guid: 3a12c698e0761704298972e6a526981b, type: 3}
+  - questionPhrase: MCBBearing_Quiz_Question_5
+    audioPhrase: 
+    optionPhrases:
+    - MCBBearing_Quiz_Q3_Opt_1
+    - MCBBearing_Quiz_Q3_Opt_2
+    - MCBBearing_Quiz_Q3_Opt_3
+    - MCBBearing_Quiz_Q3_Opt_4
+    fallbackQuestion: 'What should you do next?
+
+
+      Grab the correct part and
+      place it at the center.'
+    fallbackOptions:
+    - Rust formation
+    - Heat discoloration or cracking
+    - Bolt tightness
+    - Shaft alignment
+    correctOptionIndex: 3
+    isInteractionBased: 1
+    snapZonePrefab: {fileID: 5408833701081909759, guid: 3fdda087125a3b64986336a44b664705, type: 3}
+    interactablePrefabs:
+    - {fileID: 2647043035730869944, guid: 0ae02246fc467d9428c3c243ade7e84d, type: 3}
+    - {fileID: 6841928153581891826, guid: c3219e113b6816a4b84cfc03d231504a, type: 3}
+    - {fileID: 7834854461209916403, guid: 164a17520ba108e43a5a36b67636af67, type: 3}
+    - {fileID: 5150020932783108157, guid: 3a12c698e0761704298972e6a526981b, type: 3}

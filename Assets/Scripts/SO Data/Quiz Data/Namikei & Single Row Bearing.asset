@@ -27,6 +27,9 @@ MonoBehaviour:
     - Prevent contamination
     - Measure wheel speed
     correctOptionIndex: 1
+    isInteractionBased: 0
+    snapZonePrefab: {fileID: 0}
+    interactablePrefabs: []
   - questionPhrase: SingleRowBearing_Quiz_Question_2
     audioPhrase: 
     optionPhrases:
@@ -41,6 +44,9 @@ MonoBehaviour:
     - Metal cage
     - Seal
     correctOptionIndex: 2
+    isInteractionBased: 0
+    snapZonePrefab: {fileID: 0}
+    interactablePrefabs: []
   - questionPhrase: SingleRowBearing_Quiz_Question_3
     audioPhrase: 
     optionPhrases:
@@ -55,3 +61,57 @@ MonoBehaviour:
     - Bolt torque
     - Sensor alignment
     correctOptionIndex: 1
+    isInteractionBased: 0
+    snapZonePrefab: {fileID: 0}
+    interactablePrefabs: []
+  - questionPhrase: SingleRowBearing_Quiz_Question_4
+    audioPhrase: 
+    optionPhrases:
+    - SingleRowBearing_Quiz_Q3_Opt_1
+    - SingleRowBearing_Quiz_Q3_Opt_2
+    - SingleRowBearing_Quiz_Q3_Opt_3
+    - SingleRowBearing_Quiz_Q3_Opt_4
+    fallbackQuestion: 'Which component should be placed first during the assembly
+      of a single row bearing?
+
+
+      Grab the correct part and place it at the
+      center.'
+    fallbackOptions:
+    - Grease color
+    - Deformation or cracks
+    - Bolt torque
+    - Sensor alignment
+    correctOptionIndex: 0
+    isInteractionBased: 1
+    snapZonePrefab: {fileID: 493467852878246080, guid: 4154a98da8486dc4e96b65facfcf8240, type: 3}
+    interactablePrefabs:
+    - {fileID: 3876743808335864244, guid: e6716025660c31b47951c93221612e60, type: 3}
+    - {fileID: 5128877482651905435, guid: 86dd34d79d97915499b1fbaab77b19fb, type: 3}
+    - {fileID: 2201393369157664152, guid: 4d3b87891b8937c499c8d9210346359a, type: 3}
+    - {fileID: 1269517706336384625, guid: f82aeaf5af4ef034ca66ef654d0119ec, type: 3}
+  - questionPhrase: SingleRowBearing_Quiz_Question_5
+    audioPhrase: 
+    optionPhrases:
+    - SingleRowBearing_Quiz_Q3_Opt_1
+    - SingleRowBearing_Quiz_Q3_Opt_2
+    - SingleRowBearing_Quiz_Q3_Opt_3
+    - SingleRowBearing_Quiz_Q3_Opt_4
+    fallbackQuestion: 'What should you do next?
+
+
+      Grab the correct part and
+      place it at the center.'
+    fallbackOptions:
+    - Grease color
+    - Deformation or cracks
+    - Bolt torque
+    - Sensor alignment
+    correctOptionIndex: 2
+    isInteractionBased: 1
+    snapZonePrefab: {fileID: 239766563088682840, guid: 350a63a35e6860445afecde1607e94b8, type: 3}
+    interactablePrefabs:
+    - {fileID: 5947309995633703220, guid: 0ae39e1eab710df4199e11535c663991, type: 3}
+    - {fileID: 1698606634536154184, guid: 5936c2a63d3510c4b960ba24555d234e, type: 3}
+    - {fileID: 4251414750381606794, guid: ab1aaed755f37d94691e7ca0fdce2bf7, type: 3}
+    - {fileID: 8938389656460111592, guid: 61bff84b392892a4fa6ebf8a7c1b1415, type: 3}

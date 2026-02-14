@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: Hub3 Bearing
   m_EditorClassIdentifier: 
   steps:
-  - stepImage: {fileID: 21300000, guid: f0062b35c7ba07944a294fb2f492203e, type: 3}
+  - stepImage: {fileID: 21300000, guid: ca4f3179d612ddc418a99a5709e68c35, type: 3}
     descriptionPhrase: Hub3Bearing_Description_1
     fallbackDescription: Hub flange damage or cracks
-  - stepImage: {fileID: 21300000, guid: 3379e1a1d7903284cba29f296bb813e2, type: 3}
+  - stepImage: {fileID: 21300000, guid: cd6336350cb38cb4b8fc69cee701a310, type: 3}
     descriptionPhrase: Hub3Bearing_Description_2
     fallbackDescription: ABS sensor or cable damage
-  - stepImage: {fileID: 21300000, guid: a8f5c71d67eb6b24daab3c4c92151031, type: 3}
+  - stepImage: {fileID: 21300000, guid: 1efb1ad031b14d3479731dced0ccfd00, type: 3}
     descriptionPhrase: Hub3Bearing_Description_3
     fallbackDescription: Bolt hole wear or misalignment
-  - stepImage: {fileID: 21300000, guid: 4b20cd5e2748b32488fe6d0f18d0c0a5, type: 3}
+  - stepImage: {fileID: 21300000, guid: 5f35287f0036e0d40ad8055c5a5a42a8, type: 3}
     descriptionPhrase: Hub3Bearing_Description_4
     fallbackDescription: Seal failure causing grease leakage

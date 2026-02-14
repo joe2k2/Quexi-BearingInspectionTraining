@@ -27,6 +27,9 @@ MonoBehaviour:
     - Sensor-based bearing
     - Maintenance-free assembly
     correctOptionIndex: 1
+    isInteractionBased: 0
+    snapZonePrefab: {fileID: 0}
+    interactablePrefabs: []
   - questionPhrase: Hub1Bearing_Quiz_Question_2
     audioPhrase: 
     optionPhrases:
@@ -41,6 +44,9 @@ MonoBehaviour:
     - Transfer load between hub and bearing
     - Lock the bolts
     correctOptionIndex: 2
+    isInteractionBased: 0
+    snapZonePrefab: {fileID: 0}
+    interactablePrefabs: []
   - questionPhrase: Hub1Bearing_Quiz_Question_3
     audioPhrase: 
     optionPhrases:
@@ -55,3 +61,56 @@ MonoBehaviour:
     - No grease leakage or damage
     - Sensor signal
     correctOptionIndex: 2
+    isInteractionBased: 0
+    snapZonePrefab: {fileID: 0}
+    interactablePrefabs: []
+  - questionPhrase: Hub1Bearing_Quiz_Question_4
+    audioPhrase: 
+    optionPhrases:
+    - Hub1Bearing_Quiz_Q3_Opt_1
+    - Hub1Bearing_Quiz_Q3_Opt_2
+    - Hub1Bearing_Quiz_Q3_Opt_3
+    - Hub1Bearing_Quiz_Q3_Opt_4
+    fallbackQuestion: 'What should you do next?
+
+
+      Grab the correct part and
+      place it at the center.'
+    fallbackOptions:
+    - Proper torque
+    - Smooth raceway
+    - No grease leakage or damage
+    - Sensor signal
+    correctOptionIndex: 3
+    isInteractionBased: 1
+    snapZonePrefab: {fileID: 7873763660295549717, guid: 842a3199d19ea154790c127430b88155, type: 3}
+    interactablePrefabs:
+    - {fileID: 3592995960058539321, guid: e0822b702ea5f354d905278a88e7dd9b, type: 3}
+    - {fileID: 3697243690060938471, guid: 98df2a15056647549b1b826ad58d2152, type: 3}
+    - {fileID: 8413013046118518849, guid: 19694d0170af3e9429c10cd8b7713afd, type: 3}
+    - {fileID: 4972925689470327067, guid: c72cfaf95603c004e899ff6bc17cdd73, type: 3}
+  - questionPhrase: Hub1Bearing_Quiz_Question_5
+    audioPhrase: 
+    optionPhrases:
+    - Hub1Bearing_Quiz_Q3_Opt_1
+    - Hub1Bearing_Quiz_Q3_Opt_2
+    - Hub1Bearing_Quiz_Q3_Opt_3
+    - Hub1Bearing_Quiz_Q3_Opt_4
+    fallbackQuestion: 'What should you do next?
+
+
+      Grab the correct part and
+      place it onto the existing bearing set.'
+    fallbackOptions:
+    - Proper torque
+    - Smooth raceway
+    - No grease leakage or damage
+    - Sensor signal
+    correctOptionIndex: 2
+    isInteractionBased: 1
+    snapZonePrefab: {fileID: 5793086314749726578, guid: 9ea14e9bc1a71d14280067e798f584d1, type: 3}
+    interactablePrefabs:
+    - {fileID: 3592995960058539321, guid: e0822b702ea5f354d905278a88e7dd9b, type: 3}
+    - {fileID: 3697243690060938471, guid: 98df2a15056647549b1b826ad58d2152, type: 3}
+    - {fileID: 8413013046118518849, guid: 19694d0170af3e9429c10cd8b7713afd, type: 3}
+    - {fileID: 4972925689470327067, guid: c72cfaf95603c004e899ff6bc17cdd73, type: 3}

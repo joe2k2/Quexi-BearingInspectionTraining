@@ -19,6 +19,11 @@ public class QuizData : ScriptableObject
         public string[] fallbackOptions;
 
         public int correctOptionIndex; // 0 to 3
+
+        [Header("Interaction Settings")]
+        public bool isInteractionBased;
+        public GameObject snapZonePrefab; // Individual snap zone prefab per question
+        public GameObject[] interactablePrefabs; // 4 prefabs for interaction
     }
 
     public List<Question> questions;

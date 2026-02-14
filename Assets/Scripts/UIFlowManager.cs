@@ -5,6 +5,12 @@ using UnityEngine.UI;
 
 public class UIFlowManager : MonoBehaviour
 {
+
+    [Header("LanguageSelection Panel")]
+    [SerializeField] private GameObject aiWelcomePanel;
+    [SerializeField] private Button nextButton;
+    [SerializeField] private GameObject aiInstructor;
+
     [Header("LanguageSelection Panel")]
     [SerializeField] private GameObject languageSelectionPanel;
     [SerializeField] private Button selectButton;
@@ -36,8 +42,13 @@ public class UIFlowManager : MonoBehaviour
 
     void Start()
     {
-        InitializeLanguageSelectionScreen();
+        //InitializeLanguageSelectionScreen();
+        InitializeAIWelcomScreen();
         SetupButtonListeners();
+    }
+    void InitializeAIWelcomScreen()
+    {
+        aiWelcomePanel.SetActive(true);
     }
     void OnDestroy()
     {
@@ -64,12 +75,14 @@ public class UIFlowManager : MonoBehaviour
 
     private void SetupButtonListeners()
     {
+        nextButton.onClick.AddListener(() => { aiWelcomePanel.SetActive(false); aiInstructor.SetActive(false); InitializeLanguageSelectionScreen(); });
         selectButton.onClick.AddListener(ShowWelcomeScreen);
         startButton.onClick.AddListener(OnStartButtonClicked);
     }
 
     private void RemoveButtonListeners()
     {
+        nextButton.onClick.RemoveListener(() => { aiWelcomePanel.SetActive(false); aiInstructor.SetActive(false); InitializeLanguageSelectionScreen(); });
         selectButton.onClick.RemoveListener(ShowWelcomeScreen);
         startButton.onClick.RemoveListener(OnStartButtonClicked);
     }

@@ -6,6 +6,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum GameMode
+{
+    None,
+    Training,
+    Evaluation
+}
 public class PartInfoUIManager : MonoBehaviour
 {
     public static PartInfoUIManager Instance { get; private set; }
@@ -25,9 +31,15 @@ public class PartInfoUIManager : MonoBehaviour
         public GameObject animationBearingModel; // Animation/Visual Model (Non-interactive)
     }
 
+    [Header("UI References - Game Mode")]
+    [SerializeField] private GameObject gameModePanel;
+    [SerializeField] private Button trainingModeButton;
+    [SerializeField] private Button evaluationModeButton;
+
     [Header("Bearing Selection Configuration")]
     [SerializeField] private GameObject bearingSelectionPanel;
-    [SerializeField] private Button selectButton;
+    [SerializeField] private Button selectButton; 
+    [SerializeField] private Button bearingSelectionBackButton;
     [SerializeField] private Button openSelectionPanelButton;
     [SerializeField] private List<BearingSetup> bearingOptions;
 
@@ -50,6 +62,9 @@ public class PartInfoUIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI quizResultText;
     [SerializeField] private Button closeQuizButton;
     [SerializeField] private Button restartQuizButton;
+
+    [Header("Interaction Quiz References")]
+    [SerializeField] private Transform interactionQuizContainer;
 
     [Header("UI References - Inspection")]
     [SerializeField] private GameObject inspectionPanel;
@@ -87,6 +102,7 @@ public class PartInfoUIManager : MonoBehaviour
     private int currentQuizIndex = 0;
     private int currentScore = 0;
     private bool isQuizActive = false;
+    private List<GameObject> activeInteractionObjects = new List<GameObject>();
 
     // Inspection State
     private InspectionData currentInspectionData;
@@ -97,6 +113,9 @@ public class PartInfoUIManager : MonoBehaviour
     private LearnData currentLearnData;
     private int currentLearnIndex = 0;
     private bool isLearnActive = false;
+
+    // Game Mode
+    public GameMode currentGameMode;
 
     public int CurrentSelectedIndex { get; private set; } = 0;
     public GameObject CurrentSelectedBearing
@@ -142,7 +161,12 @@ public class PartInfoUIManager : MonoBehaviour
         else
             Destroy(gameObject);
 
+        // GameMode UI Listeners
+        if (trainingModeButton != null) trainingModeButton.onClick.AddListener(OnTrainingModeSelected);
+        if (evaluationModeButton != null) evaluationModeButton.onClick.AddListener(OnEvaluationModeSelected);
+
         // Main UI Listeners
+        if (bearingSelectionBackButton != null) bearingSelectionBackButton.onClick.AddListener(OnBearingSelectionBackClicked);
         if (closeButton != null) closeButton.onClick.AddListener(HideInfo);
         if (selectButton != null) selectButton.onClick.AddListener(ConfirmSelection);
         if (openSelectionPanelButton != null) openSelectionPanelButton.onClick.AddListener(OpenBearingSelectionPanel);
@@ -189,8 +213,8 @@ public class PartInfoUIManager : MonoBehaviour
         LeanLocalization.OnLocalizationChanged += OnLocalizationChanged;
         InitializeBearingSelection();
         OpenBearingSelectionPanel();
+        //ShowGameModePanel();
     }
-
     void OnEnable()
     {
         EventManager.UpdateSelectedBearing += OnBearingChanged;
@@ -202,16 +226,12 @@ public class PartInfoUIManager : MonoBehaviour
         EventManager.UpdateSelectedBearing -= OnBearingChanged;
         EventManager.UpdateButtonsInteractable -= OnExplodedViewToggleChanged;
     }
-    void OnExplodedViewToggleChanged(bool value)
-    {
-        startQuizButton.interactable = value;
-        startLearnButton.interactable = value;
-        changeBearingButton.interactable = value;
-    }
+    
     void OnDestroy()
     {
         if (Instance == this) Instance = null;
 
+        if (bearingSelectionBackButton != null) bearingSelectionBackButton.onClick.RemoveListener(OnBearingSelectionBackClicked);
         if (closeButton != null) closeButton.onClick.RemoveListener(HideInfo);
         if (selectButton != null) selectButton.onClick.RemoveListener(ConfirmSelection);
         if (openSelectionPanelButton != null) openSelectionPanelButton.onClick.RemoveListener(OpenBearingSelectionPanel);
@@ -245,9 +265,87 @@ public class PartInfoUIManager : MonoBehaviour
         UnsubscribeFromAnimationController();
         LeanLocalization.OnLocalizationChanged -= OnLocalizationChanged;
     }
+    // --- GameMode Selection Logic ---
+    private void ShowGameModePanel()
+    {
+        currentGameMode = GameMode.None;
 
+        if (gameModePanel != null)
+            gameModePanel.SetActive(true);
+
+        // Hide everything else
+        HideInfo();
+        if (bearingSelectionPanel != null) bearingSelectionPanel.SetActive(false);
+        if (quizPanel != null) quizPanel.SetActive(false);
+        if (learnPanel != null) learnPanel.SetActive(false);
+        if (inspectionPanel != null) inspectionPanel.SetActive(false);
+
+        EventManager.UpdateMenuUIActiveState?.Invoke(false);
+    }
+    private void OnTrainingModeSelected()
+    {
+        currentGameMode = GameMode.Training;
+
+        if (gameModePanel != null)
+            gameModePanel.SetActive(false);
+
+        OpenBearingSelectionPanel(); // existing flow
+    }
+    private void OnEvaluationModeSelected()
+    {
+        currentGameMode = GameMode.Evaluation;
+
+        if (gameModePanel != null)
+            gameModePanel.SetActive(false);
+
+        OpenBearingSelectionPanel(); // still show bearing selection
+    }
+    private void StartEvaluationForSelectedBearing()
+    {
+        Debug.Log("Evaluation Mode: Bearing selected → " + CurrentSelectedIndex);
+
+        // TODO:
+        // - Load evaluation scene
+        // - Disable learn/quiz buttons
+        // - Start timer
+        // - Lock exploded view
+    }
+    void OnExplodedViewToggleChanged(bool value)
+    {
+        startQuizButton.interactable = value;
+        startLearnButton.interactable = value;
+        changeBearingButton.interactable = value;
+    }
     // --- Bearing Selection Logic ---
+    private void OnBearingSelectionBackClicked()
+    {
+        // Stop any audio
+        if (PartAudioManager.Instance != null)
+            PartAudioManager.Instance.StopCurrentAudio();
 
+        // Hide bearing selection
+        if (bearingSelectionPanel != null)
+            bearingSelectionPanel.SetActive(false);
+
+        // Hide models
+        if (CurrentSelectedBearing != null)
+            CurrentSelectedBearing.SetActive(false);
+
+        if (CurrentAnimationBearing != null)
+        {
+            CurrentAnimationBearing.transform.localRotation = Quaternion.identity;
+            CurrentAnimationBearing.SetActive(false);
+        }
+
+        // Reset states
+        isLearnActive = false;
+        isQuizActive = false;
+        isInspectionActive = false;
+        currentGameMode = GameMode.None;
+
+        // Show mode selection again
+        ShowGameModePanel();
+    }
     private void InitializeBearingSelection()
     {
         for (int i = 0; i < bearingOptions.Count; i++)
@@ -314,7 +412,15 @@ public class PartInfoUIManager : MonoBehaviour
         
         if (learnPanel != null) learnPanel.SetActive(false);
 
-        ShowBearingOverview();
+        // Enabling the UI Based on the GameMode
+        if (currentGameMode == GameMode.Training)
+        {
+            ShowBearingOverview();
+        }
+        else if (currentGameMode == GameMode.Evaluation)
+        {
+            StartEvaluationForSelectedBearing();
+        }
 
         if (showDebugLogs)
             Debug.Log($"PartInfoUIManager: Confirmed selection. Index: {CurrentSelectedIndex}");
@@ -340,6 +446,7 @@ public class PartInfoUIManager : MonoBehaviour
         // Hide other panels
         HideInfo();
         if (quizPanel != null) quizPanel.SetActive(false);
+        ClearInteractionObjects();
         if (inspectionPanel != null) inspectionPanel.SetActive(false);
         if (learnPanel != null) learnPanel.SetActive(true);
 
@@ -648,6 +755,7 @@ public class PartInfoUIManager : MonoBehaviour
 
         EventManager.UpdateMenuUIActiveState?.Invoke(false);
 
+        ClearInteractionObjects();
         DisplayQuestion();
     }
 
@@ -660,6 +768,10 @@ public class PartInfoUIManager : MonoBehaviour
         }
 
         var q = currentQuizData.questions[currentQuizIndex];
+        if (showDebugLogs) Debug.Log($"Quiz: Displaying Question {currentQuizIndex + 1}/{currentQuizData.questions.Count}. Interaction: {q.isInteractionBased}");
+
+        // Ensure the quiz panel (containing text) is ALWAYS active so we see the question
+        if (quizPanel != null && !quizPanel.activeSelf) quizPanel.SetActive(true);
 
         // Localized Question
         if (quizQuestionText != null) 
@@ -731,6 +843,137 @@ public class PartInfoUIManager : MonoBehaviour
                 }
             }
         }
+
+        // Handle Interaction Based Spawning
+        if (q.isInteractionBased)
+        {
+            if (showDebugLogs) Debug.Log("Quiz: Setting up 3D Interaction.");
+            // Hide standard UI buttons but keep the panel active for the question text
+            if (quizOptionButtons != null)
+            {
+                foreach (var btn in quizOptionButtons) btn.gameObject.SetActive(false);
+            }
+
+            SpawnInteractionParts(q);
+        }
+        else
+        {
+            if (showDebugLogs) Debug.Log("Quiz: Setting up standard UI buttons.");
+            ClearInteractionObjects(); // Just in case
+        }
+    }
+
+    private void SpawnInteractionParts(QuizData.Question q)
+    {
+        ClearInteractionObjects();
+
+        if (interactionQuizContainer == null)
+        {
+            Debug.LogError("Quiz: Interaction Quiz Container is not assigned.");
+            return;
+        }
+
+        // Spawn Snap Zone if defined in the question
+        if (q.snapZonePrefab != null)
+        {
+            GameObject snapZone = Instantiate(q.snapZonePrefab, interactionQuizContainer);
+            activeInteractionObjects.Add(snapZone);
+            
+            // Setup Snap Zone Listener (Support both Interactor and Interactable on the zone)
+            var snapInteractor = snapZone.GetComponentInChildren<Oculus.Interaction.SnapInteractor>();
+            if (snapInteractor != null)
+            {
+                if (showDebugLogs) Debug.Log("Quiz: Found SnapInteractor on spawned snap zone.");
+                snapInteractor.WhenStateChanged += (args) => {
+                    if (args.NewState == Oculus.Interaction.InteractorState.Select) {
+                        var interactable = snapInteractor.SelectedInteractable;
+                        if (interactable != null) {
+                            if (showDebugLogs) Debug.Log($"Quiz: Part Snapped to Interactor: {interactable.gameObject.name}");
+                            var quizPart = interactable.gameObject.GetComponentInParent<QuizInteractionPart>();
+                            if (quizPart != null) quizPart.OnSnapped();
+                        }
+                    }
+                };
+            }
+            else
+            {
+                var snapInteractable = snapZone.GetComponentInChildren<Oculus.Interaction.SnapInteractable>();
+                if (snapInteractable != null)
+                {
+                    if (showDebugLogs) Debug.Log("Quiz: Found SnapInteractable on spawned snap zone.");
+                    snapInteractable.WhenStateChanged += (args) => {
+                        if (args.NewState == Oculus.Interaction.InteractableState.Select) {
+                            // If the zone is the interactable, find the interactor (the part) that selected it
+                            foreach (var interactor in snapInteractable.SelectingInteractors)
+                            {
+                                if (showDebugLogs) Debug.Log($"Quiz: Part Snapped to Interactable: {interactor.gameObject.name}");
+                                var quizPart = interactor.gameObject.GetComponentInParent<QuizInteractionPart>();
+                                if (quizPart != null) 
+                                {
+                                    quizPart.OnSnapped();
+                                    break;
+                                }
+                            }
+                        }
+                    };
+                }
+                else if (showDebugLogs) 
+                {
+                    Debug.LogError("Quiz: Neither SnapInteractor nor SnapInteractable found on spawned snap zone prefab!");
+                }
+            }
+        }
+
+        // Spawn Option Parts
+        if (q.interactablePrefabs != null)
+        {
+            for (int i = 0; i < q.interactablePrefabs.Length; i++)
+            {
+                if (q.interactablePrefabs[i] == null) continue;
+
+                GameObject part = Instantiate(q.interactablePrefabs[i], interactionQuizContainer);
+                activeInteractionObjects.Add(part);
+
+                var quizPart = part.AddComponent<QuizInteractionPart>();
+                quizPart.partIndex = i;
+                quizPart.manager = this;
+            }
+        }
+    }
+
+    public void OnInteractionPartSnapped(int selectedOptionIndex)
+    {
+        if (showDebugLogs) Debug.Log($"Quiz: OnInteractionPartSnapped called with index {selectedOptionIndex}");
+        if (!isQuizActive || currentQuizData == null) 
+        {
+            if (showDebugLogs) Debug.LogWarning($"Quiz: Snap ignored. Active: {isQuizActive}, Data: {currentQuizData != null}");
+            return;
+        }
+
+        var q = currentQuizData.questions[currentQuizIndex];
+
+        if (selectedOptionIndex == q.correctOptionIndex)
+        {
+            currentScore++;
+            if (showDebugLogs) Debug.Log("Quiz: Interaction Correct!");
+        }
+        else
+        {
+            if (showDebugLogs) Debug.Log("Quiz: Interaction Wrong!");
+        }
+
+        currentQuizIndex++;
+        ClearInteractionObjects();
+        DisplayQuestion();
+    }
+
+    private void ClearInteractionObjects()
+    {
+        foreach (var obj in activeInteractionObjects)
+        {
+            if (obj != null) Destroy(obj);
+        }
+        activeInteractionObjects.Clear();
     }
 
     private void OnAnswerSelected(int selectedOptionIndex)
@@ -750,7 +993,9 @@ public class PartInfoUIManager : MonoBehaviour
 
     private void EndQuiz()
     {
+        if (showDebugLogs) Debug.Log($"Quiz: EndQuiz called. Final Score: {currentScore}");
         isQuizActive = false;
+        ClearInteractionObjects();
         
         if (quizPanel != null) quizPanel.SetActive(false);
         if (quizResultPanel != null)
@@ -770,6 +1015,7 @@ public class PartInfoUIManager : MonoBehaviour
         CurrentSelectedBearing.SetActive(true);
         if (quizPanel != null) quizPanel.SetActive(false);
         if (quizResultPanel != null) quizResultPanel.SetActive(false);
+        ClearInteractionObjects();
         
         EventManager.UpdateMenuUIActiveState?.Invoke(true);
 
@@ -840,11 +1086,15 @@ public class PartInfoUIManager : MonoBehaviour
             if (showDebugLogs) Debug.LogWarning("PartInfoUIManager: Bearing Selection Panel is not assigned!");
         }
 
+        if (bearingSelectionBackButton != null)
+            bearingSelectionBackButton.gameObject.SetActive(true);
+
         // 2. Hide Everything Else
         HideInfo();
         if (inspectionPanel != null) inspectionPanel.SetActive(false); 
         if (learnPanel != null) learnPanel.SetActive(false); 
         if (quizPanel != null) quizPanel.SetActive(false);
+        ClearInteractionObjects();
         if (quizResultPanel != null) quizResultPanel.SetActive(false);
 
         // 3. Reset Models

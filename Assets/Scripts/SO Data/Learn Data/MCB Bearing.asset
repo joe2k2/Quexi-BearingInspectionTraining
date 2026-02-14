@@ -14,46 +14,46 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   steps:
   - titlePhrase: 
-    descriptionPhrase: SingleRowBearing_Description (1)
-    audioPhrase: SingleRowBearing_Audio (1)
+    descriptionPhrase: DoubleRowBearing_Description  (1)
+    audioPhrase: DoubleRowBearing_Audio  (1)
     animationStateName: 1
     fallbackTitle: 
-    fallbackDescription: Start to learn how to align and assemble the single row
-      bearing step by step.
+    fallbackDescription: Start to learn how to align and assemble the MCB bearing
+      step by step.
   - titlePhrase: 
-    descriptionPhrase: SingleRowBearing_Description (2)
-    audioPhrase: SingleRowBearing_Audio (2)
+    descriptionPhrase: DoubleRowBearing_Description  (2)
+    audioPhrase: DoubleRowBearing_Audio  (2)
     animationStateName: 2
     fallbackTitle: 
     fallbackDescription: First, take the inner ring and place it properly on the
       surface.
   - titlePhrase: 
-    descriptionPhrase: SingleRowBearing_Description (3)
-    audioPhrase: SingleRowBearing_Audio (3)
+    descriptionPhrase: DoubleRowBearing_Description  (3)
+    audioPhrase: DoubleRowBearing_Audio  (3)
     animationStateName: 3
     fallbackTitle: 
-    fallbackDescription: Next, take the silver cage, insert the balls into it, and
-      ensure they are evenly positioned.
+    fallbackDescription: Next, take the  silver cage, insert the balls into it, and
+      ensure they are evenly positioned one by one
   - titlePhrase: 
-    descriptionPhrase: SingleRowBearing_Description (4)
-    audioPhrase: SingleRowBearing_Audio (4)
+    descriptionPhrase: DoubleRowBearing_Description  (4)
+    audioPhrase: DoubleRowBearing_Audio  (4)
     animationStateName: 4
     fallbackTitle: 
-    fallbackDescription: Now, carefully place the ball cage assembly onto the inner
+    fallbackDescription: Now, carefully place this ball cage assembly onto the inner
       ring and align it correctly.
   - titlePhrase: 
-    descriptionPhrase: SingleRowBearing_Description (5)
-    audioPhrase: SingleRowBearing_Audio (5)
+    descriptionPhrase: DoubleRowBearing_Description  (5)
+    audioPhrase: DoubleRowBearing_Audio  (5)
     animationStateName: 5
     fallbackTitle: 
-    fallbackDescription: 'Then, take the outer ring and gently place it over the
-      assembled set.
+    fallbackDescription: 'After that, take the outer ring and gently place it over
+      both rows of ball cages.
 
-      Press the outer ring slowly until all parts are fully
-      seated and aligned.'
+      Press the outer ring slowly until all parts
+      are fully seated and aligned.'
   - titlePhrase: 
-    descriptionPhrase: SingleRowBearing_Description (6)
-    audioPhrase: SingleRowBearing_Audio (6)
+    descriptionPhrase: DoubleRowBearing_Description  (6)
+    audioPhrase: DoubleRowBearing_Audio  (6)
     animationStateName: 6
     fallbackTitle: 
     fallbackDescription: Finally, rotate the bearing to check smooth movement and
