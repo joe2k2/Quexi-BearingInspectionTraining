@@ -64,7 +64,7 @@ MonoBehaviour:
     isInteractionBased: 0
     snapZonePrefab: {fileID: 0}
     interactablePrefabs: []
-  - questionPhrase: SingleRowBearing_Quiz_Question_4
+  - questionPhrase: Quiz_Question_4
     audioPhrase: 
     optionPhrases:
     - SingleRowBearing_Quiz_Q3_Opt_1
@@ -90,7 +90,7 @@ MonoBehaviour:
     - {fileID: 5128877482651905435, guid: 86dd34d79d97915499b1fbaab77b19fb, type: 3}
     - {fileID: 2201393369157664152, guid: 4d3b87891b8937c499c8d9210346359a, type: 3}
     - {fileID: 1269517706336384625, guid: f82aeaf5af4ef034ca66ef654d0119ec, type: 3}
-  - questionPhrase: SingleRowBearing_Quiz_Question_5
+  - questionPhrase: Quiz_Question_5
     audioPhrase: 
     optionPhrases:
     - SingleRowBearing_Quiz_Q3_Opt_1

@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 182c9b1add361454880f8d772a4f0e3c, type: 3}
+  m_Name: Hub3 Bearing
+  m_EditorClassIdentifier: 
+  steps:
+  - titlePhrase: 
+    descriptionPhrase: Hub3_Description_1
+    audioPhrase: Hub3_Audio_1
+    animationStateName: 1
+    fallbackTitle: 
+    fallbackDescription: Start to learn how to align and assemble the Hub3 bearing
+      step by step.
+  - titlePhrase: 
+    descriptionPhrase: Hub3_Description_2
+    audioPhrase: Hub3_Audio_2
+    animationStateName: 2
+    fallbackTitle: 
+    fallbackDescription: First, take the inner ring and place it properly on the
+      assembly surface. Insert and tighten the bolt into the inner ring at this stage
+      to provide proper support and prevent movement during assembly. Confirm that
+      the inner ring is stable and correctly aligned.
+  - titlePhrase: 
+    descriptionPhrase: Hub3_Description_3
+    audioPhrase: Hub3_Audio_3
+    animationStateName: 3
+    fallbackTitle: 
+    fallbackDescription: Next, position the  row of balls with the cages and make
+      sure the balls are evenly spaced and properly seated inside the groove. Adjust
+      the cage if necessary to achieve proper alignment before proceeding.
+  - titlePhrase: 
+    descriptionPhrase: Hub3_Description_4
+    audioPhrase: Hub3_Audio_4
+    animationStateName: 4
+    fallbackTitle: 
+    fallbackDescription: After that, carefully place the  ball cage assembly on the
+      opposite side of the inner ring and align both rows correctly with their respective
+      raceway grooves. Ensure there is no tilting or uneven placement.
+  - titlePhrase: 
+    descriptionPhrase: Hub3_Description_5
+    audioPhrase: Hub3_Audio_5
+    animationStateName: 5
+    fallbackTitle: 
+    fallbackDescription: Next, take Seal S1 and attach it carefully on the inner
+      ring side where the first ball cage assembly is positioned to ensure proper
+      grip and secure seating. Make sure the seal is evenly aligned and properly
+      seated without twisting.
+  - titlePhrase: 
+    descriptionPhrase: Hub3_Description_6
+    audioPhrase: Hub3_Audio_6
+    animationStateName: 6
+    fallbackTitle: 
+    fallbackDescription: Now, take the B1 ring set and gently align it inner Ring,
+      ensuring proper positioning without disturbing the ball arrangement. Make sure
+      the raceways match correctly before applying pressure.
+  - titlePhrase: 
+    descriptionPhrase: Hub3_Description_7
+    audioPhrase: Hub3_Audio_7
+    animationStateName: 7
+    fallbackTitle: 
+    fallbackDescription: Press the outer ring slowly and evenly using a press machine
+      until it is fully seated and properly aligned with the inner ring assembly.
+      Avoid sudden or uneven force to prevent misalignment.
+  - titlePhrase: 
+    descriptionPhrase: Hub3_Description_8
+    audioPhrase: Hub3_Audio_8
+    animationStateName: 8
+    fallbackTitle: 
+    fallbackDescription: Then, install the seal rings on the end side carefully to
+      protect the internal components and lock the bearing assembly. Ensure the seals
+      are evenly seated and not twisted.

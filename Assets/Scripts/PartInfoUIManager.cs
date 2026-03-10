@@ -6,12 +6,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum GameMode
-{
-    None,
-    Training,
-    Evaluation
-}
 public class PartInfoUIManager : MonoBehaviour
 {
     public static PartInfoUIManager Instance { get; private set; }
@@ -24,21 +18,16 @@ public class PartInfoUIManager : MonoBehaviour
         public GameObject bearingModel; // Interaction Model
         public EnginePartData bearingOverviewData;
         public QuizData quizData;
-        public InspectionData inspectionData; 
-        
+        public InspectionData inspectionData;
+
         [Header("Learn to Fix")]
         public LearnData learnData;
         public GameObject animationBearingModel; // Animation/Visual Model (Non-interactive)
     }
 
-    [Header("UI References - Game Mode")]
-    [SerializeField] private GameObject gameModePanel;
-    [SerializeField] private Button trainingModeButton;
-    [SerializeField] private Button evaluationModeButton;
-
     [Header("Bearing Selection Configuration")]
     [SerializeField] private GameObject bearingSelectionPanel;
-    [SerializeField] private Button selectButton; 
+    [SerializeField] private Button selectButton;
     [SerializeField] private Button bearingSelectionBackButton;
     [SerializeField] private Button openSelectionPanelButton;
     [SerializeField] private List<BearingSetup> bearingOptions;
@@ -63,6 +52,10 @@ public class PartInfoUIManager : MonoBehaviour
     [SerializeField] private Button closeQuizButton;
     [SerializeField] private Button restartQuizButton;
 
+    [Header("Localization Keys - Quiz Results")]
+    [SerializeField] private string quizResultPhrase = "Quiz_Result";
+    [SerializeField] private string fallbackQuizResult = "Quiz Completed!\nScore: {0} / {1}";
+
     [Header("Interaction Quiz References")]
     [SerializeField] private Transform interactionQuizContainer;
 
@@ -73,7 +66,7 @@ public class PartInfoUIManager : MonoBehaviour
     [SerializeField] private Button nextInspectionButton;
     [SerializeField] private Button prevInspectionButton;
     [SerializeField] private Button closeInspectionButton;
-    [SerializeField] private TextMeshProUGUI inspectionProgressText; 
+    [SerializeField] private TextMeshProUGUI inspectionProgressText;
 
     [Header("UI References - Learn")]
     [SerializeField] private GameObject learnPanel;
@@ -114,8 +107,6 @@ public class PartInfoUIManager : MonoBehaviour
     private int currentLearnIndex = 0;
     private bool isLearnActive = false;
 
-    // Game Mode
-    public GameMode currentGameMode;
 
     public int CurrentSelectedIndex { get; private set; } = 0;
     public GameObject CurrentSelectedBearing
@@ -129,7 +120,7 @@ public class PartInfoUIManager : MonoBehaviour
             return null;
         }
     }
-    
+
     public GameObject CurrentAnimationBearing
     {
         get
@@ -161,9 +152,6 @@ public class PartInfoUIManager : MonoBehaviour
         else
             Destroy(gameObject);
 
-        // GameMode UI Listeners
-        if (trainingModeButton != null) trainingModeButton.onClick.AddListener(OnTrainingModeSelected);
-        if (evaluationModeButton != null) evaluationModeButton.onClick.AddListener(OnEvaluationModeSelected);
 
         // Main UI Listeners
         if (bearingSelectionBackButton != null) bearingSelectionBackButton.onClick.AddListener(OnBearingSelectionBackClicked);
@@ -173,7 +161,7 @@ public class PartInfoUIManager : MonoBehaviour
         if (changeBearingButton != null) changeBearingButton.onClick.AddListener(OnChangeBearingButtonClicked);
         if (startQuizButton != null) startQuizButton.onClick.AddListener(StartQuiz);
         if (startLearnButton != null) startLearnButton.onClick.AddListener(StartLearn);
-        
+
         // Quiz UI Listeners
         if (closeQuizButton != null) closeQuizButton.onClick.AddListener(CloseQuiz);
         if (restartQuizButton != null) restartQuizButton.onClick.AddListener(StartQuiz);
@@ -226,7 +214,7 @@ public class PartInfoUIManager : MonoBehaviour
         EventManager.UpdateSelectedBearing -= OnBearingChanged;
         EventManager.UpdateButtonsInteractable -= OnExplodedViewToggleChanged;
     }
-    
+
     void OnDestroy()
     {
         if (Instance == this) Instance = null;
@@ -238,7 +226,7 @@ public class PartInfoUIManager : MonoBehaviour
         if (changeBearingButton != null) changeBearingButton.onClick.RemoveListener(OnChangeBearingButtonClicked);
         if (startQuizButton != null) startQuizButton.onClick.RemoveListener(StartQuiz);
         if (startLearnButton != null) startLearnButton.onClick.RemoveListener(StartLearn);
-        
+
         if (quizOptionButtons != null)
         {
             foreach (var btn in quizOptionButtons)
@@ -250,7 +238,7 @@ public class PartInfoUIManager : MonoBehaviour
         if (nextInspectionButton != null) nextInspectionButton.onClick.RemoveListener(NextInspectionStep);
         if (prevInspectionButton != null) prevInspectionButton.onClick.RemoveListener(PrevInspectionStep);
         if (closeInspectionButton != null) closeInspectionButton.onClick.RemoveListener(CloseInspection);
-        
+
         if (nextLearnButton != null) nextLearnButton.onClick.RemoveListener(NextLearnStep);
         if (prevLearnButton != null) prevLearnButton.onClick.RemoveListener(PrevLearnStep);
         if (closeLearnButton != null) closeLearnButton.onClick.RemoveListener(CloseLearn);
@@ -264,51 +252,6 @@ public class PartInfoUIManager : MonoBehaviour
         UnsubscribeFromCurrentBearingParts();
         UnsubscribeFromAnimationController();
         LeanLocalization.OnLocalizationChanged -= OnLocalizationChanged;
-    }
-    // --- GameMode Selection Logic ---
-    private void ShowGameModePanel()
-    {
-        currentGameMode = GameMode.None;
-
-        if (gameModePanel != null)
-            gameModePanel.SetActive(true);
-
-        // Hide everything else
-        HideInfo();
-        if (bearingSelectionPanel != null) bearingSelectionPanel.SetActive(false);
-        if (quizPanel != null) quizPanel.SetActive(false);
-        if (learnPanel != null) learnPanel.SetActive(false);
-        if (inspectionPanel != null) inspectionPanel.SetActive(false);
-
-        EventManager.UpdateMenuUIActiveState?.Invoke(false);
-    }
-    private void OnTrainingModeSelected()
-    {
-        currentGameMode = GameMode.Training;
-
-        if (gameModePanel != null)
-            gameModePanel.SetActive(false);
-
-        OpenBearingSelectionPanel(); // existing flow
-    }
-    private void OnEvaluationModeSelected()
-    {
-        currentGameMode = GameMode.Evaluation;
-
-        if (gameModePanel != null)
-            gameModePanel.SetActive(false);
-
-        OpenBearingSelectionPanel(); // still show bearing selection
-    }
-    private void StartEvaluationForSelectedBearing()
-    {
-        Debug.Log("Evaluation Mode: Bearing selected → " + CurrentSelectedIndex);
-
-        // TODO:
-        // - Load evaluation scene
-        // - Disable learn/quiz buttons
-        // - Start timer
-        // - Lock exploded view
     }
     void OnExplodedViewToggleChanged(bool value)
     {
@@ -341,10 +284,7 @@ public class PartInfoUIManager : MonoBehaviour
         isLearnActive = false;
         isQuizActive = false;
         isInspectionActive = false;
-        currentGameMode = GameMode.None;
 
-        // Show mode selection again
-        ShowGameModePanel();
     }
     private void InitializeBearingSelection()
     {
@@ -386,13 +326,13 @@ public class PartInfoUIManager : MonoBehaviour
         {
             var option = bearingOptions[i];
             bool shouldBeActive = (i == CurrentSelectedIndex);
-            
+
             // Interaction Model - Active only if selected AND NOT learning
             if (option.bearingModel != null)
             {
                 option.bearingModel.SetActive(shouldBeActive && !isLearnActive);
             }
-            
+
             // Animation Model - Initially hidden
             if (option.animationBearingModel != null)
             {
@@ -409,18 +349,10 @@ public class PartInfoUIManager : MonoBehaviour
         {
             bearingSelectionPanel.SetActive(false);
         }
-        
+
         if (learnPanel != null) learnPanel.SetActive(false);
 
-        // Enabling the UI Based on the GameMode
-        if (currentGameMode == GameMode.Training)
-        {
-            ShowBearingOverview();
-        }
-        else if (currentGameMode == GameMode.Evaluation)
-        {
-            StartEvaluationForSelectedBearing();
-        }
+        ShowBearingOverview();
 
         if (showDebugLogs)
             Debug.Log($"PartInfoUIManager: Confirmed selection. Index: {CurrentSelectedIndex}");
@@ -431,18 +363,18 @@ public class PartInfoUIManager : MonoBehaviour
     private void StartLearn()
     {
         if (CurrentSelectedIndex < 0 || CurrentSelectedIndex >= bearingOptions.Count) return;
-        
+
         currentLearnData = bearingOptions[CurrentSelectedIndex].learnData;
-        
+
         if (currentLearnData == null || currentLearnData.steps == null || currentLearnData.steps.Count == 0)
         {
-             if (showDebugLogs) Debug.LogWarning("Learn: No data defined for this bearing.");
-             return;
+            if (showDebugLogs) Debug.LogWarning("Learn: No data defined for this bearing.");
+            return;
         }
 
         isLearnActive = true;
         currentLearnIndex = 0;
-        
+
         // Hide other panels
         HideInfo();
         if (quizPanel != null) quizPanel.SetActive(false);
@@ -485,7 +417,7 @@ public class PartInfoUIManager : MonoBehaviour
         var step = currentLearnData.steps[currentLearnIndex];
 
         // Localized Title
-        if (learnTitleText != null) 
+        if (learnTitleText != null)
         {
             var titleLocalizer = learnTitleText.GetComponent<LeanLocalizedTamilTextMeshProUGUI>();
             if (titleLocalizer != null)
@@ -501,7 +433,7 @@ public class PartInfoUIManager : MonoBehaviour
         }
 
         // Localized Description
-        if (learnDescriptionText != null) 
+        if (learnDescriptionText != null)
         {
             var descLocalizer = learnDescriptionText.GetComponent<LeanLocalizedTamilTextMeshProUGUI>();
             if (descLocalizer != null)
@@ -515,10 +447,10 @@ public class PartInfoUIManager : MonoBehaviour
                 learnDescriptionText.text = GetLocalizedText(step.descriptionPhrase, step.fallbackDescription);
             }
         }
-        
+
         if (learnProgressText != null)
         {
-             learnProgressText.text = $"{currentLearnIndex + 1} / {currentLearnData.steps.Count}";
+            learnProgressText.text = $"{currentLearnIndex + 1} / {currentLearnData.steps.Count}";
         }
 
         // Play Audio (Localized)
@@ -547,9 +479,9 @@ public class PartInfoUIManager : MonoBehaviour
     private void CloseLearn()
     {
         isLearnActive = false;
-        
+
         if (learnPanel != null) learnPanel.SetActive(false);
-        
+
         if (PartAudioManager.Instance != null) PartAudioManager.Instance.StopCurrentAudio();
 
         // Swap Models Back
@@ -560,7 +492,7 @@ public class PartInfoUIManager : MonoBehaviour
             // currentAnimationController.transform.rotation = Quaternion.identity;
         }
         if (CurrentSelectedBearing != null) CurrentSelectedBearing.SetActive(true);
-        
+
         EventManager.UpdateMenuUIActiveState?.Invoke(true);
 
         ShowBearingOverview();
@@ -585,7 +517,7 @@ public class PartInfoUIManager : MonoBehaviour
 
         currentInspectionIndex = 0;
         isInspectionActive = true;
-        
+
         UpdateInspectionUI();
     }
 
@@ -643,7 +575,7 @@ public class PartInfoUIManager : MonoBehaviour
         {
             inspectionProgressText.text = $"{currentInspectionIndex + 1} / {currentInspectionData.steps.Count}";
         }
-        
+
         // Play Audio (Localized)
         if (PartAudioManager.Instance != null)
         {
@@ -664,7 +596,7 @@ public class PartInfoUIManager : MonoBehaviour
         isInspectionActive = false;
     }
 
-    private void UpdateAdditionalUIState() 
+    private void UpdateAdditionalUIState()
     {
         bool isNormalView = currentAnimationController != null && !currentAnimationController.IsExploded();
         bool allowExtras = isShowingBearingOverview && isNormalView; // Basic condition
@@ -685,7 +617,7 @@ public class PartInfoUIManager : MonoBehaviour
         if (startLearnButton != null)
         {
             bool hasLearn = false;
-             if (CurrentSelectedIndex >= 0 && CurrentSelectedIndex < bearingOptions.Count)
+            if (CurrentSelectedIndex >= 0 && CurrentSelectedIndex < bearingOptions.Count)
             {
                 var setup = bearingOptions[CurrentSelectedIndex];
                 hasLearn = setup.learnData != null && setup.learnData.steps != null && setup.learnData.steps.Count > 0;
@@ -703,11 +635,11 @@ public class PartInfoUIManager : MonoBehaviour
                 hasInspection = setup.inspectionData != null && setup.inspectionData.steps != null && setup.inspectionData.steps.Count > 0;
             }
 
-            bool shouldShow = allowExtras && hasInspection && !isQuizActive && !isLearnActive; 
-            
+            bool shouldShow = allowExtras && hasInspection && !isQuizActive && !isLearnActive;
+
             if (shouldShow)
             {
-                if (!inspectionPanel.activeSelf) 
+                if (!inspectionPanel.activeSelf)
                 {
                     inspectionPanel.SetActive(true);
                     InitializeInspection(); // Reset to start
@@ -749,7 +681,7 @@ public class PartInfoUIManager : MonoBehaviour
 
         if (infoPanel != null) infoPanel.SetActive(false);
         if (quizResultPanel != null) quizResultPanel.SetActive(false);
-        if (inspectionPanel != null) inspectionPanel.SetActive(false); 
+        if (inspectionPanel != null) inspectionPanel.SetActive(false);
         if (learnPanel != null) learnPanel.SetActive(false);
         if (quizPanel != null) quizPanel.SetActive(true);
 
@@ -774,7 +706,7 @@ public class PartInfoUIManager : MonoBehaviour
         if (quizPanel != null && !quizPanel.activeSelf) quizPanel.SetActive(true);
 
         // Localized Question
-        if (quizQuestionText != null) 
+        if (quizQuestionText != null)
         {
             var qLocalizer = quizQuestionText.GetComponent<LeanLocalizedTamilTextMeshProUGUI>();
             if (qLocalizer != null)
@@ -785,17 +717,17 @@ public class PartInfoUIManager : MonoBehaviour
             }
             else
             {
-                quizQuestionText.text = GetLocalizedText(q.questionPhrase, q.fallbackQuestion); 
+                quizQuestionText.text = GetLocalizedText(q.questionPhrase, q.fallbackQuestion);
             }
         }
-        
+
         // Play Audio (Localized)
         if (PartAudioManager.Instance != null)
         {
             if (!string.IsNullOrEmpty(q.audioPhrase))
-                 PartAudioManager.Instance.PlayLocalizedAudio(q.audioPhrase);
+                PartAudioManager.Instance.PlayLocalizedAudio(q.audioPhrase);
             else
-                 PartAudioManager.Instance.StopCurrentAudio();
+                PartAudioManager.Instance.StopCurrentAudio();
         }
 
         if (quizOptionButtons != null)
@@ -878,16 +810,19 @@ public class PartInfoUIManager : MonoBehaviour
         {
             GameObject snapZone = Instantiate(q.snapZonePrefab, interactionQuizContainer);
             activeInteractionObjects.Add(snapZone);
-            
+
             // Setup Snap Zone Listener (Support both Interactor and Interactable on the zone)
             var snapInteractor = snapZone.GetComponentInChildren<Oculus.Interaction.SnapInteractor>();
             if (snapInteractor != null)
             {
                 if (showDebugLogs) Debug.Log("Quiz: Found SnapInteractor on spawned snap zone.");
-                snapInteractor.WhenStateChanged += (args) => {
-                    if (args.NewState == Oculus.Interaction.InteractorState.Select) {
+                snapInteractor.WhenStateChanged += (args) =>
+                {
+                    if (args.NewState == Oculus.Interaction.InteractorState.Select)
+                    {
                         var interactable = snapInteractor.SelectedInteractable;
-                        if (interactable != null) {
+                        if (interactable != null)
+                        {
                             if (showDebugLogs) Debug.Log($"Quiz: Part Snapped to Interactor: {interactable.gameObject.name}");
                             var quizPart = interactable.gameObject.GetComponentInParent<QuizInteractionPart>();
                             if (quizPart != null) quizPart.OnSnapped();
@@ -901,14 +836,16 @@ public class PartInfoUIManager : MonoBehaviour
                 if (snapInteractable != null)
                 {
                     if (showDebugLogs) Debug.Log("Quiz: Found SnapInteractable on spawned snap zone.");
-                    snapInteractable.WhenStateChanged += (args) => {
-                        if (args.NewState == Oculus.Interaction.InteractableState.Select) {
+                    snapInteractable.WhenStateChanged += (args) =>
+                    {
+                        if (args.NewState == Oculus.Interaction.InteractableState.Select)
+                        {
                             // If the zone is the interactable, find the interactor (the part) that selected it
                             foreach (var interactor in snapInteractable.SelectingInteractors)
                             {
                                 if (showDebugLogs) Debug.Log($"Quiz: Part Snapped to Interactable: {interactor.gameObject.name}");
                                 var quizPart = interactor.gameObject.GetComponentInParent<QuizInteractionPart>();
-                                if (quizPart != null) 
+                                if (quizPart != null)
                                 {
                                     quizPart.OnSnapped();
                                     break;
@@ -917,7 +854,7 @@ public class PartInfoUIManager : MonoBehaviour
                         }
                     };
                 }
-                else if (showDebugLogs) 
+                else if (showDebugLogs)
                 {
                     Debug.LogError("Quiz: Neither SnapInteractor nor SnapInteractable found on spawned snap zone prefab!");
                 }
@@ -944,7 +881,7 @@ public class PartInfoUIManager : MonoBehaviour
     public void OnInteractionPartSnapped(int selectedOptionIndex)
     {
         if (showDebugLogs) Debug.Log($"Quiz: OnInteractionPartSnapped called with index {selectedOptionIndex}");
-        if (!isQuizActive || currentQuizData == null) 
+        if (!isQuizActive || currentQuizData == null)
         {
             if (showDebugLogs) Debug.LogWarning($"Quiz: Snap ignored. Active: {isQuizActive}, Data: {currentQuizData != null}");
             return;
@@ -996,7 +933,17 @@ public class PartInfoUIManager : MonoBehaviour
         if (showDebugLogs) Debug.Log($"Quiz: EndQuiz called. Final Score: {currentScore}");
         isQuizActive = false;
         ClearInteractionObjects();
-        
+
+        if (showDebugLogs) Debug.Log($"Quiz: Submitting score {currentScore} to API...");
+        APIManager.Instance.AddPoints(currentScore, (success, message) =>
+        {
+            if (showDebugLogs)
+            {
+                if (success) Debug.Log("Quiz: Score submitted successfully!");
+                else Debug.LogWarning($"Quiz: Score submission failed: {message}");
+            }
+        });
+
         if (quizPanel != null) quizPanel.SetActive(false);
         if (quizResultPanel != null)
         {
@@ -1004,7 +951,21 @@ public class PartInfoUIManager : MonoBehaviour
             if (quizResultText != null)
             {
                 string count = currentQuizData != null && currentQuizData.questions != null ? currentQuizData.questions.Count.ToString() : "?";
-                quizResultText.text = $"Quiz Completed!\nScore: {currentScore} / {count}";
+
+                string resultTemplate = GetLocalizedText(quizResultPhrase, fallbackQuizResult);
+                string formattedResult = string.Format(resultTemplate, currentScore, count);
+
+                var localizer = quizResultText.GetComponent<LeanLocalizedTamilTextMeshProUGUI>();
+                if (localizer != null)
+                {
+                    localizer.FallbackText = formattedResult;
+                    localizer.TranslationName = ""; // Clear translation name to use formatted fallback
+                    localizer.UpdateLocalization();
+                }
+                else
+                {
+                    quizResultText.text = formattedResult;
+                }
             }
         }
     }
@@ -1016,10 +977,10 @@ public class PartInfoUIManager : MonoBehaviour
         if (quizPanel != null) quizPanel.SetActive(false);
         if (quizResultPanel != null) quizResultPanel.SetActive(false);
         ClearInteractionObjects();
-        
+
         EventManager.UpdateMenuUIActiveState?.Invoke(true);
 
-        ShowBearingOverview(); 
+        ShowBearingOverview();
     }
 
     // --- Existing Logic Updated ---
@@ -1086,32 +1047,32 @@ public class PartInfoUIManager : MonoBehaviour
             if (showDebugLogs) Debug.LogWarning("PartInfoUIManager: Bearing Selection Panel is not assigned!");
         }
 
-        if (bearingSelectionBackButton != null)
-            bearingSelectionBackButton.gameObject.SetActive(true);
+        /*if (bearingSelectionBackButton != null)
+            bearingSelectionBackButton.gameObject.SetActive(true);*/
 
         // 2. Hide Everything Else
         HideInfo();
-        if (inspectionPanel != null) inspectionPanel.SetActive(false); 
-        if (learnPanel != null) learnPanel.SetActive(false); 
+        if (inspectionPanel != null) inspectionPanel.SetActive(false);
+        if (learnPanel != null) learnPanel.SetActive(false);
         if (quizPanel != null) quizPanel.SetActive(false);
         ClearInteractionObjects();
         if (quizResultPanel != null) quizResultPanel.SetActive(false);
 
         // 3. Reset Models
         if (CurrentSelectedBearing != null) CurrentSelectedBearing.SetActive(false); // Hide model during selection
-        if (CurrentAnimationBearing != null) 
+        if (CurrentAnimationBearing != null)
         {
             CurrentAnimationBearing.transform.localRotation = Quaternion.identity; // Reset Rotation
-            CurrentAnimationBearing.SetActive(false); 
-        } 
+            CurrentAnimationBearing.SetActive(false);
+        }
 
         // 4. Reset States
         isLearnActive = false;
         isQuizActive = false;
         isInspectionActive = false;
-        
+
         if (PartAudioManager.Instance != null) PartAudioManager.Instance.StopCurrentAudio();
-        
+
         // 5. Update Menu
         EventManager.UpdateMenuUIActiveState?.Invoke(false);
     }
@@ -1153,6 +1114,12 @@ public class PartInfoUIManager : MonoBehaviour
         {
             ShowPartInfo(currentDisplayedPart);
         }
+
+        // Refresh Quiz Result if active
+        if (isQuizActive == false && quizResultPanel != null && quizResultPanel.activeSelf)
+        {
+            EndQuiz(); // Re-trigger to update text language
+        }
     }
 
     private void OnPartGrabbed(EnginePartData partData)
@@ -1193,7 +1160,7 @@ public class PartInfoUIManager : MonoBehaviour
         {
             HideInfo();
             isShowingBearingOverview = false;
-            
+
             if (PartAudioManager.Instance != null)
                 PartAudioManager.Instance.StopCurrentAudio();
         }
@@ -1204,8 +1171,8 @@ public class PartInfoUIManager : MonoBehaviour
         if (partData == null) return;
 
         currentDisplayedPart = partData;
-        
-        UpdateAdditionalUIState(); 
+
+        UpdateAdditionalUIState();
 
         var nameLocalizer = partNameText != null ? partNameText.GetComponent<LeanLocalizedTamilTextMeshProUGUI>() : null;
         var descLocalizer = partDescriptionText != null ? partDescriptionText.GetComponent<LeanLocalizedTamilTextMeshProUGUI>() : null;

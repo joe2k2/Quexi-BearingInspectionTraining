@@ -27,6 +27,9 @@ MonoBehaviour:
     - Integrated hub, bearing, and mounting components
     - Supports only radial loads
     correctOptionIndex: 2
+    isInteractionBased: 0
+    snapZonePrefab: {fileID: 0}
+    interactablePrefabs: []
   - questionPhrase: Hub3Bearing_Quiz_Question_2
     audioPhrase: 
     optionPhrases:
@@ -41,6 +44,9 @@ MonoBehaviour:
     - Cage
     - Seal
     correctOptionIndex: 1
+    isInteractionBased: 0
+    snapZonePrefab: {fileID: 0}
+    interactablePrefabs: []
   - questionPhrase: Hub3Bearing_Quiz_Question_3
     audioPhrase: 
     optionPhrases:
@@ -55,3 +61,56 @@ MonoBehaviour:
     - Detect wheel speed for braking control
     - Support axial load
     correctOptionIndex: 2
+    isInteractionBased: 0
+    snapZonePrefab: {fileID: 0}
+    interactablePrefabs: []
+  - questionPhrase: Quiz_Question_5
+    audioPhrase: 
+    optionPhrases:
+    - Hub3Bearing_Quiz_Q3_Opt_1
+    - Hub3Bearing_Quiz_Q3_Opt_2
+    - Hub3Bearing_Quiz_Q3_Opt_3
+    - Hub3Bearing_Quiz_Q3_Opt_4
+    fallbackQuestion: 'What should you do next?
+
+
+      Grab the correct part and
+      place it onto the existing bearing set.'
+    fallbackOptions:
+    - Reduce friction
+    - Retain grease
+    - Detect wheel speed for braking control
+    - Support axial load
+    correctOptionIndex: 2
+    isInteractionBased: 1
+    snapZonePrefab: {fileID: 7006083149845832805, guid: e8745fc0bd574e44fa4152bd75ec19dd, type: 3}
+    interactablePrefabs:
+    - {fileID: 6320781709017086476, guid: efc0b08b58f1e0b4bb6dddf0ba214ad1, type: 3}
+    - {fileID: 7576939436549037870, guid: a47398b9e79665a4d8742366fcaf6efc, type: 3}
+    - {fileID: 944106540595218710, guid: 307551e0eea06da40a7813aae2799a2c, type: 3}
+    - {fileID: 8007877664991383403, guid: 5a0ab8e2cbf644141809f786398a7833, type: 3}
+  - questionPhrase: Quiz_Question_5
+    audioPhrase: 
+    optionPhrases:
+    - Hub3Bearing_Quiz_Q3_Opt_1
+    - Hub3Bearing_Quiz_Q3_Opt_2
+    - Hub3Bearing_Quiz_Q3_Opt_3
+    - Hub3Bearing_Quiz_Q3_Opt_4
+    fallbackQuestion: 'What should you do next?
+
+
+      Grab the correct part and
+      place it onto the existing bearing set.'
+    fallbackOptions:
+    - Reduce friction
+    - Retain grease
+    - Detect wheel speed for braking control
+    - Support axial load
+    correctOptionIndex: 3
+    isInteractionBased: 1
+    snapZonePrefab: {fileID: 1477491131044326452, guid: de374f9f6502db74cb1a973e09b56202, type: 3}
+    interactablePrefabs:
+    - {fileID: 6320781709017086476, guid: efc0b08b58f1e0b4bb6dddf0ba214ad1, type: 3}
+    - {fileID: 7576939436549037870, guid: a47398b9e79665a4d8742366fcaf6efc, type: 3}
+    - {fileID: 944106540595218710, guid: 307551e0eea06da40a7813aae2799a2c, type: 3}
+    - {fileID: 8007877664991383403, guid: 5a0ab8e2cbf644141809f786398a7833, type: 3}
