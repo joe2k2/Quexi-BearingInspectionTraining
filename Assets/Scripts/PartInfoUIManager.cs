@@ -1,4 +1,4 @@
-﻿using Lean.Localization;
+using Lean.Localization;
 using System;
 using System.Collections.Generic;
 using TamilUI;
@@ -14,6 +14,7 @@ public class PartInfoUIManager : MonoBehaviour
     public struct BearingSetup
     {
         public string name;
+        public string apiBearingId; // Added for API mapping
         public Toggle toggle;
         public GameObject bearingModel; // Interaction Model
         public EnginePartData bearingOverviewData;
@@ -201,7 +202,43 @@ public class PartInfoUIManager : MonoBehaviour
         LeanLocalization.OnLocalizationChanged += OnLocalizationChanged;
         InitializeBearingSelection();
         OpenBearingSelectionPanel();
-        //ShowGameModePanel();
+        FetchAndMapBearingIDs();
+    }
+
+    private void FetchAndMapBearingIDs()
+    {
+        APIManager.Instance.GetBearings((success, bearings, message) =>
+        {
+            if (success && bearings != null)
+            {
+                if (showDebugLogs) Debug.Log($"API: Fetched {bearings.Length} bearings from server.");
+                
+                // Map by order as requested by user
+                for (int i = 0; i < bearingOptions.Count && i < bearings.Length; i++)
+                {
+                    var option = bearingOptions[i];
+                    
+                    // Only overwrite if it was empty, or always update if you want it dynamic
+                    // For now, let's keep it dynamic but log if we are using a manual one
+                    string oldId = option.apiBearingId;
+                    option.apiBearingId = bearings[i]._id;
+                    bearingOptions[i] = option;
+                    
+                    if (showDebugLogs) 
+                        Debug.Log($"API: Mapped local bearing '{option.name}' to API ID '{option.apiBearingId}' (Index {i})");
+                }
+            }
+            else
+            {
+                if (showDebugLogs) Debug.LogWarning($"API: Failed to fetch bearings (Access Denied?). Using manual IDs from Inspector if present.");
+                // Log the manual IDs we are using
+                foreach(var option in bearingOptions)
+                {
+                    if (!string.IsNullOrEmpty(option.apiBearingId))
+                        Debug.Log($"API: Using manual ID for '{option.name}': {option.apiBearingId}");
+                }
+            }
+        });
     }
     void OnEnable()
     {
@@ -935,14 +972,23 @@ public class PartInfoUIManager : MonoBehaviour
         ClearInteractionObjects();
 
         if (showDebugLogs) Debug.Log($"Quiz: Submitting score {currentScore} to API...");
-        APIManager.Instance.AddPoints(currentScore, (success, message) =>
+        
+        string bearingId = bearingOptions[CurrentSelectedIndex].apiBearingId;
+        if (string.IsNullOrEmpty(bearingId))
         {
-            if (showDebugLogs)
+            if (showDebugLogs) Debug.LogWarning("Quiz: Score not submitted - No API bearing ID mapped for this selection.");
+        }
+        else
+        {
+            APIManager.Instance.AddPoints(bearingId, currentScore, (success, message) =>
             {
-                if (success) Debug.Log("Quiz: Score submitted successfully!");
-                else Debug.LogWarning($"Quiz: Score submission failed: {message}");
-            }
-        });
+                if (showDebugLogs)
+                {
+                    if (success) Debug.Log("Quiz: Score submitted successfully!");
+                    else Debug.LogWarning($"Quiz: Score submission failed: {message}");
+                }
+            });
+        }
 
         if (quizPanel != null) quizPanel.SetActive(false);
         if (quizResultPanel != null)

@@ -58,6 +58,7 @@ public class UIFlowManager : MonoBehaviour
     {
         // Hide all other panels first
         if (aiWelcomePanel != null) aiWelcomePanel.SetActive(false);
+        if (aiInstructor != null) aiInstructor.SetActive(false);
         if (languageSelectionPanel != null) languageSelectionPanel.SetActive(false);
         if (welcomePanel != null) welcomePanel.SetActive(false);
 
@@ -77,6 +78,7 @@ public class UIFlowManager : MonoBehaviour
     {
         if (loginPanel != null) loginPanel.SetActive(false);
         aiWelcomePanel.SetActive(true);
+        aiInstructor.SetActive(true);
     }
     void OnDestroy()
     {
@@ -127,6 +129,7 @@ public class UIFlowManager : MonoBehaviour
         if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
         {
             SetLoginStatus("Email and Password required", Color.red);
+            EventManager.closeKeyboard?.Invoke();
             return;
         }
 
@@ -138,11 +141,13 @@ public class UIFlowManager : MonoBehaviour
             if (success)
             {
                 SetLoginStatus("Login Successful!", Color.green);
+                EventManager.closeKeyboard?.Invoke();
                 InitializeAIWelcomeScreen();
             }
             else
             {
-                SetLoginStatus($"Failed: {message}", Color.red);
+                SetLoginStatus($"Login Failed", Color.red); //($"Failed: {message}", Color.red);
+                EventManager.closeKeyboard?.Invoke();
             }
         });
     }

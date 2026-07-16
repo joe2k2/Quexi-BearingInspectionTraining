@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.meta.xr.sdk.all": "83.0.0",
+    "com.meta.xr.sdk.all": "85.0.0",
     "com.readyplayerme.core": "https://github.com/readyplayerme/rpm-unity-sdk-core.git",
     "com.soupday.cc3_unity_tools": "https://github.com/soupday/cc_unity_tools_URP.git",
     "com.unity.2d.sprite": "1.0.0",
@@ -17,9 +17,10 @@
     "com.unity.timeline": "1.8.9",
     "com.unity.ugui": "2.0.0",
     "com.unity.visualscripting": "1.9.7",
-    "com.unity.xr.interaction.toolkit": "3.0.10",
+    "com.unity.xr.interaction.toolkit": "2.5.4",
     "com.unity.xr.management": "4.5.3",
-    "com.unity.xr.openxr": "1.16.1",
+    "com.unity.xr.oculus": "4.5.4",
+    "com.unity.xr.openxr": "1.10.0",
     "com.unity.modules.accessibility": "1.0.0",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
